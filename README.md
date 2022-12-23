@@ -7,8 +7,7 @@
 # H2 Overview:
 
 **Undertale** is a hit RPG (role playing game) that follows the main character as they traverse through the underground and encounter various monsters that engage the character in fights. There's just one catch... _you don't have to fight_.
-
-    Every fight is filled with humor and unexpected options as the character attempts to protect their soul (a small heart icon) from incoming projectiles. **This game is inspired by Undertale.** Enjoy!
+Every fight is filled with humor and unexpected options as the character attempts to protect their soul (a small heart icon) from incoming projectiles. **This game is inspired by Undertale.** Enjoy!
 
 # H2 User should be able to:
 
