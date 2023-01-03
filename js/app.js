@@ -23,29 +23,55 @@ const ctx = gameplayArea.getContext('2d')
 
 gameplayArea.setAttribute('width', getComputedStyle(gameplayArea)['width'])
 gameplayArea.setAttribute('height', getComputedStyle(gameplayArea)['height'])
+// Getting Image
+
 
 
 // Player Icon 
 
-const player = {
-    x: 20,
-    y: 20,
-    width: 50,
-    height: 50, 
-    color: 'black',
-    alive: true, 
-    render: function () {
-        ctx.fillStyle = this.color
-        ctx.fillRect(this.x, this.y, this.width, this.height)
+// const player = {
+//     x: 20,
+//     y: 20,
+//     width: 50,
+//     height: 50, 
+//     alive: true, 
+//     render: function () {
+        
+//         let img = new Image()
+// img.src = 'Images/8bit heart (project 1).png'
 
 
-    }
+//         fill_gameplayArea(img);
+//         ctx.drawImage(img,this.x, this.y)
 
 
-}
+//     }
 
-player.render()
+
+// }
+
+// player.render()
+
 
 
 // gameMessage.innerText = "click fight to begin"
 // gameMessage.style.color = 'pink'
+
+// /  ////////// Player Icon/ Image /////////////
+
+window.onload = function () {
+   
+    let img = new Image();
+    img.src = 'Images/8bit heart (project 1).png';
+
+   
+    img.onload = function () {
+        fill_canvas(img);       
+    }
+
+    function fill_canvas(img) {
+
+        ctx.drawImage(img, 120, 200, 50, 50); 
+              
+    }
+}
