@@ -1,0 +1,25 @@
+body {
+    background-color: black;
+    font-family: medievalsharp;
+    text-align: center;
+}
+
+
+h1, h2 {
+    color: red;
+    margin: 0;
+}
+
+h1 { 
+    font-size: 50px;
+    margin-bottom: 0;
+}
+
+.play-area {
+    background-color: white;
+    width: 800px;
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+}
