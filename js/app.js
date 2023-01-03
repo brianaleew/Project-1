@@ -15,4 +15,37 @@ const gameplayArea = document.getElementById('canvas')
 const fightBtn = document.getElementById('fight-button')
 const resetBtn = document.getElementById('reset-button')
 const playerHealth = document.getElementById('health-bar')
-const gameText = document.getElementById('player-message')
+const gameMessage = document.getElementById('game-message')
+
+console.log(gameplayArea)
+// CANVAS SETUP
+const ctx = gameplayArea.getContext('2d')
+
+gameplayArea.setAttribute('width', getComputedStyle(gameplayArea)['width'])
+gameplayArea.setAttribute('height', getComputedStyle(gameplayArea)['height'])
+
+
+// Player Icon 
+
+const player = {
+    x: 20,
+    y: 20,
+    width: 50,
+    height: 50, 
+    color: 'black',
+    alive: true, 
+    render: function () {
+        ctx.fillStyle = this.color
+        ctx.fillRect(this.x, this.y, this.width, this.height)
+
+
+    }
+
+
+}
+
+player.render()
+
+
+// gameMessage.innerText = "click fight to begin"
+// gameMessage.style.color = 'pink'
