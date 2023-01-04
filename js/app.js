@@ -26,23 +26,26 @@ gameplayArea.setAttribute('height', getComputedStyle(gameplayArea)['height'])
 
                 // Set up Fight Button
 
-   const beginFight = () => {
-        const projectiles = new 
+//    const beginFight = () => {
+//         const projectiles = new 
 
-   }
+//    }
    
    
-                fightBtn.addEventListener('click', beginFight)
+//                 fightBtn.addEventListener('click', beginFight)
 // gameMessage.innerText = "click fight to begin"
 // gameMessage.style.color = 'pink'
 
+                            //Game Loop
+
 // /  ////////// Player Icon/ Image /////////////
 
+
 window.onload = function () {
-   
     let img = new Image();
     img.src = 'Images/8bit heart (project 1).png';
-
+   
+console.log(`loaded`)
    
     img.onload = function () {
         fill_canvas(img);       
@@ -54,11 +57,41 @@ window.onload = function () {
 
     }
 }
+  /////         Player Movement ////////
+ const playerMovement = (e) => {
+    switch (e.keyCode) {
+        case (87):
+        case (38):
+
+            img.y -= 10
+            
+            break
+        
+        case (65):
+        case (37):
+            img.x -= 10
+            break
+     
+        case (83):
+        case (40):
+            img.y += 10
+            break
+     
+        case (68):
+        case (39):
+            img.x += 10
+            break    
+    }
+ }
+
+
+
+
 
 
 // Trying to create Projectiles for player to dodge
 
-class projectile {
+class Projectile {
     constructor (x, y, width, height, radius, velocity) {
         this.x = x
         this.y = y 
@@ -78,7 +111,25 @@ class projectile {
    
 }
 
-const projectileUno = new projectile(123, 123, 123, 123, 123, 123)
+// const projectileUno = new projectile(120, 123, 10, 40, 8, 50)
+// projectileUno.draw()
+
+// const projectileDos = new projectile(140, 150, 10, 40, 8, 50)
+// projectileDos.draw()
+
+
+// Trying  to create 8 random projectiles
+// const projectileMaker = () => {
+//     for (let i = 0; i < 8; i++) {
+//         let randomNumber = Math.floor(Math.random() * 120)
+//         let randomProjectile = new Projectile(x * randomNumber, y * randomNumber, 10, 10, 8, 50)
+//     }
+// }
+
+// projectileMaker()
+
+
+
 
 
 
@@ -88,5 +139,10 @@ const projectileUno = new projectile(123, 123, 123, 123, 123, 123)
 // })
 
 
-
+document.addEventListener('DOMContentLoaded', function () {
+    
+    document.addEventListener('keydown', playerMovement)
+   
+    // setInterval(gameLoop, 60)
+})
 

@@ -19,7 +19,7 @@ h1 {
 main {
     background-color: red; /* this will hold the enemy image and hopefully we can add some text bubble*/
     width: 100%;
-    height: 600px;
+    height: 500px;
     display: flex;
     justify-content: center;
     align-items: flex-end;
