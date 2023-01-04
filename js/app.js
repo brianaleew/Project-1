@@ -130,8 +130,7 @@ class Projectile {
 
 
 
-
-
+                            //////// Hit Detector //////
 
 
 // window.addEventListener('click', () => {
