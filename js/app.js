@@ -37,25 +37,7 @@ const playerStatus = () => {
         playerIcon.alive = false 
     }
 } //NEED to set up player health 
-//Game Loop
 
-const gameLoop = () => {
-    //check if player is alive
-    // if alive make sure they arent getting hit
-    if (playerStatus() === true) {
-            //hit detector function here
-
-    }
-
-    // clear the canvas for better animation
-    ctx.clearRect(0,0, gameplayArea.width, gameplayArea.height)
-     // redisplay player
-     playerIcon.render() 
-     //
-
-}
-
-    
 
 ////////// Player Icon/ Image /////////////
 let img = new Image();
@@ -151,14 +133,15 @@ playerIcon.render()
         this.y += this.dy 
     }
    
-    // update() {
-    //     this.draw()
-    //     // this.x += this.velocity.x 
-    //     this.y += this.velocity (amount of pixels per interval)
+    update() {
+        this.draw()
+        this.y += this.velocity 
+    }
+        //(velocity = amount of pixels per interval)
     // projectiles appear at the top of the canvas and are stored in an array
     // then go down the y axis
     // go off screen and are taken out of storage
-    // }
+    // 
 }
 
 // Trying  to create 8 random projectiles
@@ -169,7 +152,7 @@ const projectileMaker = () => {
         let randomProjectile = new Projectile(randomNumber, randomNumber, randomNumber, randomNumber, 10, 10, 8, 5)
         randomProjectile.draw()
         projArray.push(randomProjectile)
-        console.log(projArray)
+        // console.log(projArray)
         
         // console.log('hi')
 
@@ -177,17 +160,6 @@ const projectileMaker = () => {
         // projectiles overlap! 
     }
 }
-
-// projectileMaker()
-
-// Set up Fight Button
-
-//   const beginFight = () => {
-//     projectileMaker()
-
-//    }
-
-fightBtn.addEventListener('click', projectileMaker)
 
                             //////// Hit Detector //////
 
@@ -204,12 +176,6 @@ fightBtn.addEventListener('click', projectileMaker)
 // })
 
 
-document.addEventListener('DOMContentLoaded', function () {
-    
-    document.addEventListener('keydown', playerMovement)
-   
-   
-})
 
 //          RESET BUTTON ////
 
@@ -221,5 +187,43 @@ const reset = () => {
 
 // start game loop that runs animation like cc
 //projectile maker function stores projectile in array
-// inside game loop, loop over proj array, call the move/update function on each
+// inside game loop, loop over projectile array, call the move/update function on each
 // when proj hits bottom, splice out of array
+
+//Game Loop
+
+const gameLoop = () => {
+    
+    // check if player is alive
+    // if alive make sure they arent getting hit
+    if (playerStatus() === true) {
+            //hit detector function here
+
+    }
+    // clear the canvas for better animation
+    ctx.clearRect(0,0, gameplayArea.width, gameplayArea.height)
+     // redisplay player
+    playerIcon.render() 
+     //loop over projectile array and call the update/move function 
+    projArray.forEach((proj) => {
+        proj.update()
+        // console.log(projArray)
+    })
+        //  (velocity = amount of pixels per interval)
+    
+
+}
+  gameLoop();  
+
+
+// Event Listeners
+fightBtn.addEventListener('click', projectileMaker)
+
+const gameInterval = setInterval(gameLoop, 60)
+const stopGameLoop = () => {clearInterval(gameInterval)}
+
+document.addEventListener('DOMContentLoaded', function () {
+    gameInterval
+})
+
+
