@@ -24,46 +24,85 @@ const ctx = gameplayArea.getContext('2d')
 gameplayArea.setAttribute('width', getComputedStyle(gameplayArea)['width'])
 gameplayArea.setAttribute('height', getComputedStyle(gameplayArea)['height'])
 
-                // Set up Fight Button
-
-//    const beginFight = () => {
-//         const projectiles = new 
-
-//    }
+  
    
    
-//                 fightBtn.addEventListener('click', beginFight)
 // gameMessage.innerText = "click fight to begin"
 // gameMessage.style.color = 'pink'
 
-                            //Game Loop
+const playerStatus = () => {
+    if(playerHealth > 0) {
+        playerIcon.alive = true 
+    } else {
+        playerIcon.alive = false 
+    }
+} //NEED to set up player health 
+//Game Loop
 
-// /  ////////// Player Icon/ Image /////////////
+const gameLoop = () => {
+    //check if player is alive
+    // if alive make sure they arent getting hit
+    if (playerStatus() === true) {
+            //hit detector function here
 
-
-window.onload = function () {
-    let img = new Image();
-    img.src = 'Images/8bit heart (project 1).png';
-   
-console.log(`loaded`)
-   
-    img.onload = function () {
-        fill_canvas(img);       
     }
 
-    function fill_canvas(img) {
+    // clear the canvas for better animation
+    ctx.clearRect(0,0, gameplayArea.width, gameplayArea.height)
+     // redisplay player
+     playerIcon.render() 
+     //
 
-        ctx.drawImage(img, 120, 200, 50, 50); 
-
-    }
 }
+
+    
+
+////////// Player Icon/ Image /////////////
+let img = new Image();
+
+ // Player Object 
+
+const playerIcon = {
+    x: 125,
+    y: 200,
+    width: 50,
+    height: 50,
+    alive: true,
+    render: function () {
+        window.onload = function () {
+    
+            img.src = 'Images/8bit heart (project 1).png'; 
+            // img.setAttribute('id', 'play-image')
+           
+            console.log(`player icon loaded`)
+           
+            img.onload = function () {
+                fill_canvas(img);       
+            }
+        
+            function fill_canvas(img) {
+        
+                ctx.drawImage(img, playerIcon.x, playerIcon.y, 50, 50); 
+                // syntax (img, x, y, width, height)
+                //check canvas crawler. need to define x and y!
+        
+            }
+        }
+    }
+
+}
+
+playerIcon.render()
+
+
   /////         Player Movement ////////
- const playerMovement = (e) => {
+ function playerMovement(e) {
+    console.log('Where is e?', e.keyCode)
     switch (e.keyCode) {
         case (87):
         case (38):
 
-            img.y -= 10
+        img.y -= 10
             
             break
         
@@ -84,17 +123,17 @@ console.log(`loaded`)
     }
  }
 
+// Player Health
 
-
-
-
-
-// Trying to create Projectiles for player to dodge
-
-class Projectile {
-    constructor (x, y, width, height, radius, velocity) {
-        this.x = x
-        this.y = y 
+ // projectile storage (array)
+ const projArray = []
+ // Making Projectiles
+ class Projectile {
+    constructor (x, y, dx, dy, width, height, radius, velocity) {
+        this.x = x 
+        this.y = 1
+        this.dx = 2
+        this.dy = -2 
         this.width = width 
         this.height = height 
         this.radius = radius 
@@ -107,34 +146,61 @@ class Projectile {
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI *2, false)
         ctx.fillStyle = this.color
         ctx.fill()
+        ctx.closePath()
+        this.x += this.dx 
+        this.y += this.dy 
     }
    
+    // update() {
+    //     this.draw()
+    //     // this.x += this.velocity.x 
+    //     this.y += this.velocity (amount of pixels per interval)
+    // projectiles appear at the top of the canvas and are stored in an array
+    // then go down the y axis
+    // go off screen and are taken out of storage
+    // }
 }
 
-// const projectileUno = new projectile(120, 123, 10, 40, 8, 50)
-// projectileUno.draw()
-
-// const projectileDos = new projectile(140, 150, 10, 40, 8, 50)
-// projectileDos.draw()
-
-
 // Trying  to create 8 random projectiles
-// const projectileMaker = () => {
-//     for (let i = 0; i < 8; i++) {
-//         let randomNumber = Math.floor(Math.random() * 120)
-//         let randomProjectile = new Projectile(x * randomNumber, y * randomNumber, 10, 10, 8, 50)
-//     }
-// }
+const projectileMaker = () => {
+
+    for (let i = 0; i < 8; i++) {
+        let randomNumber = Math.floor(Math.random() * 280)
+        let randomProjectile = new Projectile(randomNumber, randomNumber, randomNumber, randomNumber, 10, 10, 8, 5)
+        randomProjectile.draw()
+        projArray.push(randomProjectile)
+        console.log(projArray)
+        
+        // console.log('hi')
+
+        //
+        // projectiles overlap! 
+    }
+}
 
 // projectileMaker()
 
+// Set up Fight Button
 
+//   const beginFight = () => {
+//     projectileMaker()
+
+//    }
+
+fightBtn.addEventListener('click', projectileMaker)
 
                             //////// Hit Detector //////
 
 
+
+
+
+
+
+
+
 // window.addEventListener('click', () => {
-//     console.log('yerrrr') 
+//     console.log('checking event listener') 
 // })
 
 
@@ -142,6 +208,18 @@ document.addEventListener('DOMContentLoaded', function () {
     
     document.addEventListener('keydown', playerMovement)
    
-    // setInterval(gameLoop, 60)
+   
 })
 
+//          RESET BUTTON ////
+
+const reset = () => {
+
+}
+
+
+
+// start game loop that runs animation like cc
+//projectile maker function stores projectile in array
+// inside game loop, loop over proj array, call the move/update function on each
+// when proj hits bottom, splice out of array
