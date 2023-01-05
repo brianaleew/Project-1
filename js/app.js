@@ -15,6 +15,7 @@ const gameplayArea = document.getElementById('canvas')
 const fightBtn = document.getElementById('fight-button')
 const resetBtn = document.getElementById('reset-button')
 const playerHealth = document.getElementById('health-bar')
+const totalHealth = document.getElementById('health-counter')
 const gameMessage = document.getElementById('game-message')
 
 console.log(gameplayArea)
@@ -106,6 +107,22 @@ playerIcon.render()
  }
 
 // Player Health
+
+const healthTracker = () => {
+    // if player collides with projectile then
+    // display a difference in hp 
+    // health counter goes down by two
+    //hp bar get smaller
+
+    // let beginningHealth = 20
+    // if (hitDetectionfunction = true) {
+    // totalHealth.innerText = `${beginnerHealth} - 2`
+    // console.log(totalHealth)
+
+    
+   // }
+
+}
 
  // projectile storage (array)
  const projArray = []
@@ -208,6 +225,10 @@ const gameLoop = () => {
     projArray.forEach((proj) => {
         proj.update()
         // console.log(projArray)
+        if (proj.y > 280) {
+            projArray.splice(0, Infinity)
+            console.log(projArray)
+        }
     })
         //  (velocity = amount of pixels per interval)
     

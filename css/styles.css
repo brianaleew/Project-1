@@ -62,5 +62,13 @@ button {
     height:200px;
     align-self: center;
     justify-self: center;
-    
+
+}
+
+#health-bar, span {
+    background-color:yellow;
+    display: inline-block;
+    width: 50px;
+    height: 13px;
+    margin: 2px 5px 0 5px;
 }
