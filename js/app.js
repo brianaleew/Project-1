@@ -19,6 +19,8 @@ const resetBtn = document.getElementById('reset-button')
 const playerHealth = document.getElementById('health-bar')
 const totalHealth = document.getElementById('health-counter')
 const gameMessage = document.getElementById('game-message')
+const enemyText = document.getElementById('bubble-text')
+
 
 console.log(gameplayArea)
 // CANVAS SETUP
@@ -32,7 +34,7 @@ gameplayArea.setAttribute('height', getComputedStyle(gameplayArea)['height'])
    
 // gameMessage.innerText = "click fight to begin"
 gameMessage.style.color = 'pink'
-gameMessage.style.fontSize = '50px'
+gameMessage.style.fontSize = '30px'
 
 const playerStatus = () => {
     if(playerHealth > 0) {
@@ -189,14 +191,14 @@ const healthTracker = () => {
     if(hitDetector === true) {
     // display a difference in hp in two ways
     // 1. health counter goes down by two
-    totalHealth.innerText = '${beginningHealth} - 2'
+    totalHealth.textContent = '`${beginningHealth} - 2`'
     //hp bar get smaller
         playerHealth.style.width = '0px';
    }
 
 }
 
-healthTracker()
+healthTracker(playerIcon)
 
  // projectile storage (array)
  const projArray = []
@@ -272,17 +274,28 @@ const projectileMaker = () => {
 const mercySequence = () => {
      //once the mercy button is hit
      // a message saying what you did appears
+     gameMessage.innerText = 'You told him you are a pacifist...'
+    
      // that message clears after _____ (a click maybe or a timer)
+     
      // a new message with the bosses response 
+     enemyText.innerText = 'How about you calmly dodge my projectiles!'
      // after a click or timer the fight begins!
+     projectileMaker()
+     if(playerIcon.alive === true) {
+        enemyText.innerText = 'Have you been doing yoga?'
+     }
 }
 
 const actSequence = () => {
     // once the act button is hit 
     // a message saying what you did appears
+    gameMessage.innerText = 'You told him a joke...'
     // that message clears after _____ (a click maybe or a timer)
     // a new message with the bosses response 
+    enemyText.innerText = 'What did you say about my mother?!'
     // after a click or timer the fight begins!
+    projectileMaker()
 
 }
 
@@ -325,7 +338,7 @@ const gameLoop = () => {
      console.log('rendering player')
      playerIcon.render()
      playerIcon.playerMovement() 
-     
+    //  healthTracker(playerIcon)
      //loop over projectile array and call the update/move function 
     projArray.forEach((proj) => {
         proj.update()
@@ -360,9 +373,9 @@ document.addEventListener('keyup', (e) => {
 
 fightBtn.addEventListener('click', projectileMaker)
 //resetBtn.addEventListener('click', reset) still need to write out reset function
-// actBtn.addEventListener('click', actSequence)
-// need act function written
-// mercyBtn.addEventListener('click', mercySequence)
+actBtn.addEventListener('click', actSequence)
+
+mercyBtn.addEventListener('click', mercySequence)
 //need act function written
 const gameInterval = setInterval(gameLoop, 60)
 const stopGameLoop = () => {clearInterval(gameInterval)}
@@ -377,3 +390,8 @@ document.addEventListener('DOMContentLoaded', function () {
 //    make enemy say their last words
 //    display message in canvas saying You win!
 //}
+
+
+// To do list 
+// add timers/intervals to the mercy and act functions
+// add rounds to the game 
