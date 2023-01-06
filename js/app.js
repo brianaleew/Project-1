@@ -13,6 +13,8 @@
 
 const gameplayArea = document.getElementById('canvas')
 const fightBtn = document.getElementById('fight-button')
+const mercyBtn = document.getElementById('mercy-button')
+const actBtn = document.getElementById('act-button')
 const resetBtn = document.getElementById('reset-button')
 const playerHealth = document.getElementById('health-bar')
 const totalHealth = document.getElementById('health-counter')
@@ -115,14 +117,17 @@ const healthTracker = () => {
     //hp bar get smaller
 
     // let beginningHealth = 20
+
+    // 
     // if (hitDetectionfunction = true) {
     // totalHealth.innerText = `${beginnerHealth} - 2`
     // console.log(totalHealth)
-
-    
+    playerHealth.width = 
+    console.log(`health stuff`)
    // }
 
 }
+healthTracker()
 
  // projectile storage (array)
  const projArray = []
@@ -131,8 +136,8 @@ const healthTracker = () => {
     constructor (x, y, dx, dy, width, height, radius, velocity) {
         this.x = x 
         this.y = 1
-        this.dx = 2
-        this.dy = -2 
+        this.dx = 0
+        this.dy = -2
         this.width = width 
         this.height = height 
         this.radius = radius 
@@ -164,9 +169,9 @@ const healthTracker = () => {
 // Trying  to create 8 random projectiles
 const projectileMaker = () => {
 
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 6; i++) {
         let randomNumber = Math.floor(Math.random() * 280)
-        let randomProjectile = new Projectile(randomNumber, randomNumber, randomNumber, randomNumber, 10, 10, 8, 5)
+        let randomProjectile = new Projectile(randomNumber, randomNumber, randomNumber, randomNumber, 10, 10, 6, 10)
         randomProjectile.draw()
         projArray.push(randomProjectile)
         // console.log(projArray)
@@ -178,14 +183,39 @@ const projectileMaker = () => {
     }
 }
 
-                            //////// Hit Detector //////
+//////// Hit Detector //////
+
+const hitDetector = (thing) => {
+//the big if statement
+
+ if (img.x < thing.x + thing.width
+    && img.x + img.width > thing.x
+    && img.y < thing.y + thing.height
+    && img.y + img.height > thing.y) {
+        console.log('HIT!')
+        thing.alive = false
+    }
+
+}
 
 
 
+const mercySequence = () => {
+     //once the mercy button is hit
+     // a message saying what you did appears
+     // that message clears after _____ (a click maybe or a timer)
+     // a new message with the bosses response 
+     // after a click or timer the fight begins!
+}
 
+const actSequence = () => {
+    // once the act button is hit 
+    // a message saying what you did appears
+    // that message clears after _____ (a click maybe or a timer)
+    // a new message with the bosses response 
+    // after a click or timer the fight begins!
 
-
-
+}
 
 
 // window.addEventListener('click', () => {
@@ -214,13 +244,15 @@ const gameLoop = () => {
     // check if player is alive
     // if alive make sure they arent getting hit
     if (playerStatus() === true) {
+        
             //hit detector function here
+            hitDetector()
 
     }
     // clear the canvas for better animation
     ctx.clearRect(0,0, gameplayArea.width, gameplayArea.height)
      // redisplay player
-    playerIcon.render() 
+     playerIcon.render() 
      //loop over projectile array and call the update/move function 
     projArray.forEach((proj) => {
         proj.update()
@@ -230,7 +262,7 @@ const gameLoop = () => {
             console.log(projArray)
         }
     })
-        //  (velocity = amount of pixels per interval)
+//(velocity = amount of pixels per interval)
     
 
 }
@@ -239,7 +271,11 @@ const gameLoop = () => {
 
 // Event Listeners
 fightBtn.addEventListener('click', projectileMaker)
-
+//resetBtn.addEventListener('click', reset) still need to write out reset function
+// actBtn.addEventListener('click', actSequence)
+// need act function written
+// mercyBtn.addEventListener('click', mercySequence)
+//need act function written
 const gameInterval = setInterval(gameLoop, 60)
 const stopGameLoop = () => {clearInterval(gameInterval)}
 
@@ -248,3 +284,5 @@ document.addEventListener('DOMContentLoaded', function () {
 })
 
 
+// tonight I 
+// added mercy and act buttons and their event listeners
