@@ -47,70 +47,72 @@ const playerStatus = () => {
 
 //  Player Object and Player Movement
 
-const playerIcon = {
-    x: 125,
-    y: 200,
-    width: 50,
-    height: 50,
-    alive: true,
-    speed: 15,
-    direction: {
+class PlayerIcon {
+    constructor(x, y, width, height, direction)
+   { this.x = 125
+    this.y = 200
+    this.width = 50
+    this.height = 50
+    this.alive = true
+    this.speed = 15
+    this.direction = {
         up: false,
         down: false, 
         left: false,
         right:false
 
-    },
+    } 
+    }
     
-    setDirection: function (key) {
+    setDirection = function (key) {
         console.log('this is the key in setDirection', key)
         if (key.toLowerCase() == 'w') { this.direction.up = true }
         if (key.toLowerCase() == 'a') { this.direction.left = true }
         if (key.toLowerCase() == 's') { this.direction.down = true }
         if (key.toLowerCase() == 'd') { this.direction.right = true }
-    },
-    unsetDirection: function (key) {
+    }
+    unsetDirection = function (key) {
         console.log('this is the key in unsetDirection', key)
         if (key.toLowerCase() == 'w') { this.direction.up = false }
         if (key.toLowerCase() == 'a') { this.direction.left = false }
         if (key.toLowerCase() == 's') { this.direction.down = false }
         if (key.toLowerCase() == 'd') { this.direction.right = false }
-    },
+    }
 
 
-    playerMovement: function () {
-        // send our guy flyin in whatever direction is true
+    playerMovement = function () {
+        
         if (this.direction.up) {
             this.y -= this.speed
-            // while we're tracking movement, lets wall off the sides of the canvas
-            if (this.y <= 0) {
-                this.y = 0
+        
+        if (this.y <= 0) {
+            this.y = 0
             }
         }
         if (this.direction.left) {
             this.x -= this.speed
-            if (this.x <= 0) {
-                this.x = 0
+        if (this.x <= 0) {
+            this.x = 0
             }
         }
         if (this.direction.down) {
             this.y += this.speed
-            // to stop down and right directions, we again need to account for the size of our player
-            if (this.y + this.height >= gameplayArea.height) {
-                this.y = gameplayArea.height - this.height
+            
+        if (this.y + this.height >= gameplayArea.height) {
+           this.y = gameplayArea.height - this.height
             }
         }
         if (this.direction.right) {
             this.x += this.speed
-            if (this.x + this.width >= gameplayArea.width) {
-                this.x = gameplayArea.width - this.width
+        if (this.x + this.width >= gameplayArea.width) {
+            this.x = gameplayArea.width - this.width
             }
         }
-    },
-    render: function () {
+    }
+    render = function () {
         const playerIcon = new Image();
-playerIcon.onload = () => {
-    ctx.drawImage(
+        playerIcon.onload = () => {
+        ctx.drawImage(
         playerIcon,
         this.x,
         this.y,
@@ -133,7 +135,7 @@ playerIcon.src = 'Images/8bit heart (project 1).png'
         
             
         // }
-    },
+    }
 }
 
 // function fill_canvas(img) {
@@ -143,6 +145,7 @@ playerIcon.src = 'Images/8bit heart (project 1).png'
 //     //check canvas crawler. need to define x and y!
 
 // }
+const playerIcon = new PlayerIcon()
 playerIcon.render()
 
 
@@ -321,7 +324,8 @@ const gameLoop = () => {
     ctx.clearRect(0,0, gameplayArea.width, gameplayArea.height)
      // redisplay player
      console.log('rendering player')
-     playerIcon.render() 
+     playerIcon.render()
+     playerIcon.playerMovement() 
      //loop over projectile array and call the update/move function 
     projArray.forEach((proj) => {
         proj.update()
