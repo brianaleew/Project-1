@@ -31,7 +31,8 @@ gameplayArea.setAttribute('height', getComputedStyle(gameplayArea)['height'])
    
    
 // gameMessage.innerText = "click fight to begin"
-// gameMessage.style.color = 'pink'
+gameMessage.style.color = 'pink'
+gameMessage.style.fontSize = '50px'
 
 const playerStatus = () => {
     if(playerHealth > 0) {
@@ -39,7 +40,7 @@ const playerStatus = () => {
     } else {
         playerIcon.alive = false 
     }
-} //NEED to set up player health 
+} 
 
 
 ////////// Player Icon/ Image /////////////
@@ -53,7 +54,7 @@ class PlayerIcon {
     this.y = 200
     this.width = 50
     this.height = 50
-    this.alive = true
+    this.alive = true 
     this.speed = 15
     this.direction = {
         up: false,
@@ -181,23 +182,20 @@ playerIcon.render()
 // Player Health
 
 const healthTracker = () => {
+    //start with 20 health
+    let beginningHealth = 20
+    let barLength = 50
     // if player collides with projectile then
-   
-    // display a difference in hp 
-    // health counter goes down by two
+    if(hitDetector === true) {
+    // display a difference in hp in two ways
+    // 1. health counter goes down by two
+    totalHealth.innerText = '${beginningHealth} - 2'
     //hp bar get smaller
-
-    // let beginningHealth = 20
-    // let totalHealth
-    // 
-     // if(hitDetector === true) {
-    // totalHealth.innerText = `${beginnerHealth} - 2`
-    // console.log(totalHealth)
-    playerHealth.width = 
-    console.log(`health stuff`)
-   // }
+        playerHealth.style.width = '0px';
+   }
 
 }
+
 healthTracker()
 
  // projectile storage (array)
@@ -315,10 +313,11 @@ const gameLoop = () => {
     // check if player is alive
     // if alive make sure they arent getting hit
     if (playerIcon.alive === true) {
-        
             //hit detector function here
             hitDetector(Projectile)
 
+    } else {
+        gameMessage.textContent = "You Lose"
     }
     // clear the canvas for better animation
     ctx.clearRect(0,0, gameplayArea.width, gameplayArea.height)
@@ -326,10 +325,12 @@ const gameLoop = () => {
      console.log('rendering player')
      playerIcon.render()
      playerIcon.playerMovement() 
+     
      //loop over projectile array and call the update/move function 
     projArray.forEach((proj) => {
         proj.update()
         hitDetector(proj)
+        
         // console.log(projArray)
         if (proj.y > 280) {
             projArray.splice(0, Infinity)
@@ -371,5 +372,8 @@ document.addEventListener('DOMContentLoaded', function () {
 })
 
 
-// tonight I 
-// added mercy and act buttons and their event listeners
+// winning logic 
+// if (round === 4 && player.icon === alive) {
+//    make enemy say their last words
+//    display message in canvas saying You win!
+//}

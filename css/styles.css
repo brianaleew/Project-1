@@ -17,7 +17,6 @@ h1 {
 
 
 main {
-    
     background-color: red; /*  this will hold the enemy image and hopefully we can add some text bubble */
     width: 100%;
     height: 500px;
@@ -25,6 +24,7 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+   
 }
 canvas {
     background-color: white;
@@ -60,6 +60,7 @@ button {
 #boss-image {
     width:200px;
     height:200px;
+    margin-left: 300px;
 }
 
 #health-bar, span {
@@ -69,3 +70,33 @@ button {
     height: 13px;
     margin: 2px 5px 0 5px;
 }
+
+/* speech bubble css sourced from Dave Alger link: https://freefrontend.com/css-speech-bubbles/ */
+.bubble {
+    position: relative;
+    float: right;
+    
+    display: inline;
+    font-family: sans-serif;
+    font-size: 18px;
+    line-height: 24px;
+    width: 300px;
+    background: #fff;
+    border-radius: 40px;
+    padding: 24px;
+    text-align: center;
+    color: #000;
+  }
+  
+  .bubble-bottom-left:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 45px solid #fff;
+    border-right: 22px solid transparent;
+    border-top: 12px solid #fff;
+    border-bottom: 20px solid transparent;
+    left: 22px;
+    bottom: -24px;
+  }
