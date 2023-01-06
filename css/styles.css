@@ -24,16 +24,12 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
 }
 canvas {
-    position: absolute;
-    right: 400;
-    bottom: 289;
     background-color: white;
     width: 300px;
     height: 280px;
-   
     margin: 0 auto;
 }
 
@@ -62,14 +58,8 @@ button {
 }
 
 #boss-image {
-    position: absolute;
-    right: 450;
-    top: 120;
     width:200px;
     height:200px;
-    align-self: center;
-    justify-self: center;
-
 }
 
 #health-bar, span {

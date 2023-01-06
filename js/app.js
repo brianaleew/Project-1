@@ -43,9 +43,9 @@ const playerStatus = () => {
 
 
 ////////// Player Icon/ Image /////////////
-let img = new Image();
+// let img = new Image();
 
- // Player Object 
+//  Player Object and Player Movement
 
 const playerIcon = {
     x: 125,
@@ -53,73 +53,141 @@ const playerIcon = {
     width: 50,
     height: 50,
     alive: true,
-    render: function () {
-        window.onload = function () {
+    speed: 15,
+    direction: {
+        up: false,
+        down: false, 
+        left: false,
+        right:false
+
+    },
     
-            img.src = 'Images/8bit heart (project 1).png'; 
-            // img.setAttribute('id', 'play-image')
-           
-            console.log(`player icon loaded`)
-           
-            img.onload = function () {
-                fill_canvas(img);       
-            }
-        
-            function fill_canvas(img) {
-        
-                ctx.drawImage(img, playerIcon.x, playerIcon.y, 50, 50); 
-                // syntax (img, x, y, width, height)
-                //check canvas crawler. need to define x and y!
-        
+    setDirection: function (key) {
+        console.log('this is the key in setDirection', key)
+        if (key.toLowerCase() == 'w') { this.direction.up = true }
+        if (key.toLowerCase() == 'a') { this.direction.left = true }
+        if (key.toLowerCase() == 's') { this.direction.down = true }
+        if (key.toLowerCase() == 'd') { this.direction.right = true }
+    },
+    unsetDirection: function (key) {
+        console.log('this is the key in unsetDirection', key)
+        if (key.toLowerCase() == 'w') { this.direction.up = false }
+        if (key.toLowerCase() == 'a') { this.direction.left = false }
+        if (key.toLowerCase() == 's') { this.direction.down = false }
+        if (key.toLowerCase() == 'd') { this.direction.right = false }
+    },
+
+
+    playerMovement: function () {
+        // send our guy flyin in whatever direction is true
+        if (this.direction.up) {
+            this.y -= this.speed
+            // while we're tracking movement, lets wall off the sides of the canvas
+            if (this.y <= 0) {
+                this.y = 0
             }
         }
-    }
+        if (this.direction.left) {
+            this.x -= this.speed
+            if (this.x <= 0) {
+                this.x = 0
+            }
+        }
+        if (this.direction.down) {
+            this.y += this.speed
+            // to stop down and right directions, we again need to account for the size of our player
+            if (this.y + this.height >= gameplayArea.height) {
+                this.y = gameplayArea.height - this.height
+            }
+        }
+        if (this.direction.right) {
+            this.x += this.speed
+            if (this.x + this.width >= gameplayArea.width) {
+                this.x = gameplayArea.width - this.width
+            }
+        }
+    },
+    render: function () {
+        const playerIcon = new Image();
+playerIcon.onload = () => {
+    ctx.drawImage(
+        playerIcon,
+        this.x,
+        this.y,
+        50,
+        50
 
+        )
+}
+playerIcon.src = 'Images/8bit heart (project 1).png'
+        // window.onload = function () {
+    
+        //     img.src = 'Images/8bit heart (project 1).png'; 
+        //     // img.setAttribute('id', 'play-image')
+           
+        //     console.log(`player icon loaded`)
+           
+        //     // img.onload = function () {
+        //     //     fill_canvas(img);       
+        //     // }
+        
+            
+        // }
+    },
 }
 
+// function fill_canvas(img) {
+        
+//     ctx.drawImage(img, playerIcon.x, playerIcon.y, 50, 50); 
+//     // syntax (img, x, y, width, height)
+//     //check canvas crawler. need to define x and y!
+
+// }
 playerIcon.render()
 
 
-  /////         Player Movement ////////
- function playerMovement(e) {
-    console.log('Where is e?', e.keyCode)
-    switch (e.keyCode) {
-        case (87):
-        case (38):
 
-        img.y -= 10
+  /////         Player Movement ////////
+//  function playerMovement(e) {
+//     console.log('Where is e?', e.keyCode)
+//     switch (e.keyCode) {
+//         case (87):
+//         case (38):
+
+//         playerIcon.y -= 10
             
-            break
+//             break
         
-        case (65):
-        case (37):
-            img.x -= 10
-            break
+//         case (65):
+//         case (37):
+//             playerIcon.x -= 10
+//             break
      
-        case (83):
-        case (40):
-            img.y += 10
-            break
+//         case (83):
+//         case (40):
+//             playerIcon.y += 10
+//             break
      
-        case (68):
-        case (39):
-            img.x += 10
-            break    
-    }
- }
+//         case (68):
+//         case (39):
+//             playerIcon.x += 10
+//             break    
+//     }
+//  }
 
 // Player Health
 
 const healthTracker = () => {
     // if player collides with projectile then
+   
     // display a difference in hp 
     // health counter goes down by two
     //hp bar get smaller
 
     // let beginningHealth = 20
-
+    // let totalHealth
     // 
-    // if (hitDetectionfunction = true) {
+     // if(hitDetector === true) {
     // totalHealth.innerText = `${beginnerHealth} - 2`
     // console.log(totalHealth)
     playerHealth.width = 
@@ -133,7 +201,7 @@ healthTracker()
  const projArray = []
  // Making Projectiles
  class Projectile {
-    constructor (x, y, dx, dy, width, height, radius, velocity) {
+    constructor (x, width, height, radius, velocity) {
         this.x = x 
         this.y = 1
         this.dx = 0
@@ -164,14 +232,14 @@ healthTracker()
     // then go down the y axis
     // go off screen and are taken out of storage
     // 
-}
+}  
 
 // Trying  to create 8 random projectiles
 const projectileMaker = () => {
 
     for (let i = 0; i < 6; i++) {
         let randomNumber = Math.floor(Math.random() * 280)
-        let randomProjectile = new Projectile(randomNumber, randomNumber, randomNumber, randomNumber, 10, 10, 6, 10)
+        let randomProjectile = new Projectile(randomNumber, 10, 10, 6, 10)
         randomProjectile.draw()
         projArray.push(randomProjectile)
         // console.log(projArray)
@@ -183,15 +251,15 @@ const projectileMaker = () => {
     }
 }
 
-//////// Hit Detector //////
+////// Hit Detector //////
 
-const hitDetector = (thing) => {
+  function hitDetector (thing) {
 //the big if statement
 
- if (img.x < thing.x + thing.width
-    && img.x + img.width > thing.x
-    && img.y < thing.y + thing.height
-    && img.y + img.height > thing.y) {
+ if (playerIcon.x < thing.x + thing.width
+    && playerIcon.x + playerIcon.width > thing.x
+    && playerIcon.y < thing.y + thing.height
+    && playerIcon.y + playerIcon.height > thing.y) {
         console.log('HIT!')
         thing.alive = false
     }
@@ -243,19 +311,21 @@ const gameLoop = () => {
     
     // check if player is alive
     // if alive make sure they arent getting hit
-    if (playerStatus() === true) {
+    if (playerIcon.alive === true) {
         
             //hit detector function here
-            hitDetector()
+            hitDetector(Projectile)
 
     }
     // clear the canvas for better animation
     ctx.clearRect(0,0, gameplayArea.width, gameplayArea.height)
      // redisplay player
+     console.log('rendering player')
      playerIcon.render() 
      //loop over projectile array and call the update/move function 
     projArray.forEach((proj) => {
         proj.update()
+        hitDetector(proj)
         // console.log(projArray)
         if (proj.y > 280) {
             projArray.splice(0, Infinity)
@@ -270,6 +340,19 @@ const gameLoop = () => {
 
 
 // Event Listeners
+
+document.addEventListener('keydown', (e) => {
+    playerIcon.setDirection(e.key)
+})
+
+document.addEventListener('keyup', (e) => {
+    if(['w', 'a', 's', 'd'].includes(e.key)) {
+        playerIcon.unsetDirection(e.key)
+    }
+    
+})
+
+
 fightBtn.addEventListener('click', projectileMaker)
 //resetBtn.addEventListener('click', reset) still need to write out reset function
 // actBtn.addEventListener('click', actSequence)
