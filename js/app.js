@@ -5,7 +5,7 @@
 // player should be able to click the fight button to begin the game (more button options later)
 // player should be able to move their heart icon with W,A,S,D
 // Lose health when contact is made by the heart icon and a projectile
-//Display a Winner message after 3 rounds of projectiles have been dodged successfully
+//Display a Winner message after x number of rounds of projectiles have been dodged successfully
 
 
 
@@ -141,7 +141,7 @@ playerIcon.render()
     let beginningHealth = 20
     let currentHealth = beginningHealth
     
-    let beginningHealthBarLength = 60
+    let beginningHealthBarLength = 50
     let currentPlayerHealthBarLength = beginningHealthBarLength
     playerHealth.style.width = `${currentPlayerHealthBarLength}px`
     let hit = playerIcon.hit
@@ -161,16 +161,16 @@ const roundCounter = () => {
 
 const healthTracker = () => {
     //start with 20 health and 50px long health bar 
-    currentHealth = currentHealth - 4
-    totalHealth.textContent = `${currentHealth}`
-     console.log('health tracker runs')
+    
     // if player collides with projectile then
     // const playerHit = () => {
        
             //take damage
             // display a difference in hp in two ways
             // 1. health counter goes down by two
-            
+            currentHealth = currentHealth - 4
+    totalHealth.textContent = `${currentHealth}`
+     console.log('health tracker runs')
             //2.hp bar gets smaller by 10px
             currentPlayerHealthBarLength = currentPlayerHealthBarLength - 10
             playerHealth.style.width = `${currentPlayerHealthBarLength}px`
@@ -180,7 +180,7 @@ const healthTracker = () => {
 
             if(currentHealth <= 0) {
                 playerIcon.alive = false
-                playerHealth.style.width = '1px'
+                playerHealth.style.width = '10px'
                 
             }
     
@@ -345,34 +345,6 @@ const fightSequence = () => {
 
 
 
-//          RESET BUTTON ////
-
-const reset = () => {
-    console.log(`reset button hit`)
-    //stop game loop 
-    stopGameLoop()
-    //reset round to round 1
-    round = 1
-    //refill health attributes
-    let beginningHealth = 20
-    let currentHealth = beginningHealth
-    
-    let beginningHealthBarLength = 60
-    let currentPlayerHealthBarLength = beginningHealthBarLength
-    playerHealth.style.width = `${currentPlayerHealthBarLength}px`
-    let hit = playerIcon.hit
-    // clear all text messages 
-    enemyText.innerText = 'I am your worst nightmare'
-    gameMessage.innerText = ''
-    // player is alive again
-    playerIcon.alive = true 
-    //begin game loop again 
-    
-    gameLoop()
-    const gameInterval = setInterval(gameLoop, 60)
-    
-
-}
 
 
 
@@ -389,6 +361,7 @@ const reset = () => {
 const gameLoop = () => {
     //checks the round
     roundCounter()
+
 
     //run through the loop normally unless we hit round 4
     //if we get to round 4, display winning message, enemy message and stop the loop
@@ -445,6 +418,50 @@ const gameLoop = () => {
 }
   gameLoop();  
 
+  //Game Loop Stop and Interval 
+const gameInterval = setInterval(gameLoop, 60)
+const stopGameLoop = () => {clearInterval(gameInterval)}
+
+////RESET BUTTON ////
+
+const reset = () => {
+    console.log(`reset button hit`)
+    //stop game loop 
+    stopGameLoop()
+    //reset round to round 1
+    round = 1
+    //refill health attributes
+    let beginningHealth = 20
+    let currentHealth = beginningHealth
+    // let currentHealth = 20
+    
+    
+    let beginningHealthBarLength = 60
+    let currentPlayerHealthBarLength = beginningHealthBarLength
+    playerHealth.style.width = `${currentPlayerHealthBarLength}px`
+   
+    // clear all text messages 
+    // (taunt player then put beginning enemy text)
+    enemyText.innerText = `Can't handle the heat?`
+    const enemyAction = () => {enemyText.innerText = `I'm Bill Cypher...your worst nightmare`}
+    setTimeout(enemyAction, 2000)
+    // Tell player they restarted the game then erase
+    gameMessage.innerText = 'You restarted the game'
+    const playerAction = () => {
+        gameMessage.innerText = ''
+    }
+    setTimeout(playerAction, 2000)
+    // player is alive again
+    playerIcon.alive = true 
+    //begin game loop again 
+    
+    gameLoop()
+    const gameInterval = setInterval(gameLoop, 60)
+    
+
+}
+reset()
+
 
 // Event Listeners
 
@@ -470,28 +487,22 @@ mercyBtn.addEventListener('click', mercySequence)
 //reset button here
 resetBtn.addEventListener('click', reset)
 
-//Game Loop Stop and Interval 
-const gameInterval = setInterval(gameLoop, 60)
-const stopGameLoop = () => {clearInterval(gameInterval)}
+
 
 document.addEventListener('DOMContentLoaded', function () {
     gameInterval
 })
 
 
-// winning logic 
-// if (round === 4 && player.icon === alive) {
-//    make enemy say their last words
-        //
-//    display message in canvas saying You win!
-//}
+
+
 
 
 // To do list 
 
-// add rounds to the game 
-// define rounds in a variable (how do we do that)
-// make a round counter function 
-// add it to game loop 
-//keeps track of rounds
+//get reset button to reset health
+//why is game getting faster when reset is hit more than once?
+//either add start screen or add instructions to the game message area
+
+
 
