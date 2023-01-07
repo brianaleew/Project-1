@@ -171,7 +171,8 @@ const healthTracker = () => {
             currentPlayerHealthBarLength = currentPlayerHealthBarLength - 10
             playerHealth.style.width = `${currentPlayerHealthBarLength}px`
             console.log(`got hit`)
-        
+            console.log('this is currentHealth',currentHealth)
+            console.log('this is player width',playerHealth.style.width)
 
             if(currentHealth <= 0) {
                 playerIcon.alive = false
