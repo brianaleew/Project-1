@@ -58,6 +58,7 @@ class PlayerIcon {
     this.height = 50
     this.alive = true 
     this.speed = 15
+    this.hit = false 
     this.direction = {
         up: false,
         down: false, 
@@ -125,19 +126,7 @@ class PlayerIcon {
         )
 }
 playerIcon.src = 'Images/8bit heart (project 1).png'
-        // window.onload = function () {
-    
-        //     img.src = 'Images/8bit heart (project 1).png'; 
-        //     // img.setAttribute('id', 'play-image')
-           
-        //     console.log(`player icon loaded`)
-           
-        //     // img.onload = function () {
-        //     //     fill_canvas(img);       
-        //     // }
-        
-            
-        // }
+      
     }
 }
 
@@ -152,53 +141,47 @@ const playerIcon = new PlayerIcon()
 playerIcon.render()
 
 
+// Game Start Function (sets major constant variables and triggers game loop)
+// function gameStart () {
 
-  /////         Player Movement ////////
-//  function playerMovement(e) {
-//     console.log('Where is e?', e.keyCode)
-//     switch (e.keyCode) {
-//         case (87):
-//         case (38):
-
-//         playerIcon.y -= 10
-            
-//             break
-        
-//         case (65):
-//         case (37):
-//             playerIcon.x -= 10
-//             break
-     
-//         case (83):
-//         case (40):
-//             playerIcon.y += 10
-//             break
-     
-//         case (68):
-//         case (39):
-//             playerIcon.x += 10
-//             break    
-//     }
-//  }
-
+    //current health is linked to beginning health and starts at 
+    let beginningHealth = 20
+    let currentHealth = beginningHealth
+    
+    let beginningHealthBarLength = 50
+    let currentPlayerHealthBarLength = beginningHealthBarLength
+    playerHealth.style.width = `${currentPlayerHealthBarLength}px`
+    let hit = playerIcon.hit
+ //   gameLoop()
+//}
 // Player Health
 
 const healthTracker = () => {
-    //start with 20 health
-    let beginningHealth = 20
-    let barLength = 50
+    //start with 20 health and 50px long health bar 
+    totalHealth.textContent = `${currentHealth}`
+     console.log('health tracker runs')
     // if player collides with projectile then
-    if(hitDetector === true) {
-    // display a difference in hp in two ways
-    // 1. health counter goes down by two
-    totalHealth.textContent = '`${beginningHealth} - 2`'
-    //hp bar get smaller
-        playerHealth.style.width = '0px';
-   }
+    // const playerHit = () => {
+       
+            //take damage
+            // display a difference in hp in two ways
+            // 1. health counter goes down by two
+            currentHealth = currentHealth - 2
+            //2.hp bar gets smaller by 10px
+            currentPlayerHealthBarLength = currentPlayerHealthBarLength - 10
+            playerHealth.style.width = `${currentPlayerHealthBarLength}px`
+            console.log(`got hit`)
+        
+
+            if(currentHealth <= 0) {
+                playerIcon.alive = false
+            }
+    
+       
 
 }
 
-healthTracker(playerIcon)
+
 
  // projectile storage (array)
  const projArray = []
@@ -214,6 +197,8 @@ healthTracker(playerIcon)
         this.radius = radius 
         this.velocity = velocity 
         this.color = 'black' 
+        this.alive = true 
+        this.hit = true
        
     }
     draw() {
@@ -263,8 +248,14 @@ const projectileMaker = () => {
     && playerIcon.x + playerIcon.width > thing.x
     && playerIcon.y < thing.y + thing.height
     && playerIcon.y + playerIcon.height > thing.y) {
+        healthTracker()
         console.log('HIT!')
         thing.alive = false
+        //  thing.hit = true 
+        if(thing.alive == false) {
+
+        }
+        
     }
 
 }
@@ -273,30 +264,47 @@ const projectileMaker = () => {
 
 const mercySequence = () => {
      //once the mercy button is hit
+
+     //increase round counter by one
      // a message saying what you did appears
-     gameMessage.innerText = 'You told him you are a pacifist...'
-    
+     const playerAction = () => {gameMessage.innerText = 'You told him you are a pacifist...'}
+    setTimeout(playerAction, 1000)
      // that message clears after _____ (a click maybe or a timer)
      
      // a new message with the bosses response 
-     enemyText.innerText = 'How about you calmly dodge my projectiles!'
+     const enemyAction = () => {enemyText.innerText = 'How about you calmly dodge my projectiles!'}
+     setTimeout(enemyAction, 3000)
      // after a click or timer the fight begins!
-     projectileMaker()
-     if(playerIcon.alive === true) {
+     setTimeout(projectileMaker, 4000)
+     const enemyFinal = () => {
+        if(playerIcon.alive === true) {
         enemyText.innerText = 'Have you been doing yoga?'
      }
+    }
+    setTimeout(enemyFinal, 8000)
 }
 
 const actSequence = () => {
     // once the act button is hit 
+
+    // increase round counter by one
+
+
     // a message saying what you did appears
-    gameMessage.innerText = 'You told him a joke...'
+   const playerAction = () => {gameMessage.innerText = 'You told him a joke...'}
+   setTimeout(playerAction, 1000)
     // that message clears after _____ (a click maybe or a timer)
     // a new message with the bosses response 
-    enemyText.innerText = 'What did you say about my mother?!'
+    const enemyAction = () => {enemyText.innerText = 'What did you say about my mother?!'}
+    setTimeout(enemyAction, 3000)
     // after a click or timer the fight begins!
-    projectileMaker()
-
+    setTimeout(projectileMaker, 4000)
+    const enemyFinal = () => {
+        if(playerIcon.alive === true) {
+        enemyText.innerText = 'Hmm...Maybe you do have a point about her'
+     }
+    }
+    setTimeout(enemyFinal, 8000)
 }
 
 
@@ -311,6 +319,9 @@ const actSequence = () => {
 const reset = () => {
 
 }
+
+
+
 
 
 
@@ -348,9 +359,16 @@ const gameLoop = () => {
         if (proj.y > 280) {
             projArray.splice(0, Infinity)
             console.log(projArray)
+        } 
+        if (proj.alive === false){
+            let spliceIndex = projArray.indexOf(proj);
+            if (spliceIndex > -1) {
+            projArray.splice(spliceIndex, 1)
+            console.log(projArray)
+            }
         }
     })
-//(velocity = amount of pixels per interval)
+
     
 
 }
@@ -388,6 +406,7 @@ document.addEventListener('DOMContentLoaded', function () {
 // winning logic 
 // if (round === 4 && player.icon === alive) {
 //    make enemy say their last words
+        //
 //    display message in canvas saying You win!
 //}
 
