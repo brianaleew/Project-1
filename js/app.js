@@ -136,7 +136,7 @@ playerIcon.render()
 
 // Game Start Function (sets major constant variables and triggers game loop)
 // function gameStart () {
-
+    let round = 1
     //current health is linked to beginning health and starts at 
     let beginningHealth = 20
     let currentHealth = beginningHealth
@@ -147,6 +147,16 @@ playerIcon.render()
     let hit = playerIcon.hit
  //   gameLoop()
 //}
+
+//Round Tracker Function (keeps track of the current round)
+const roundCounter = () => {
+
+    let currentRound = round
+    console.log('the current round is', currentRound)
+    
+}
+
+
 // Player Health
 
 const healthTracker = () => {
@@ -192,7 +202,7 @@ const healthTracker = () => {
         this.width = width 
         this.height = height 
         this.radius = radius 
-        this.velocity = velocity 
+        this.velocity = velocity //velocity equal to the amount of pixels per interval
         this.color = 'black' 
         this.alive = true 
         this.hit = true
@@ -212,11 +222,8 @@ const healthTracker = () => {
         this.draw()
         this.y += this.velocity 
     }
-        //(velocity = amount of pixels per interval)
-    // projectiles appear at the top of the canvas and are stored in an array
-    // then go down the y axis
-    // go off screen and are taken out of storage
-    // 
+       
+    
 }  
 
 // Trying  to create 8 random projectiles
@@ -276,6 +283,7 @@ const mercySequence = () => {
      const enemyFinal = () => {
         if(playerIcon.alive === true) {
         enemyText.innerText = 'Have you been doing yoga?'
+        round ++
      }
     }
     setTimeout(enemyFinal, 8000)
@@ -299,6 +307,7 @@ const actSequence = () => {
     const enemyFinal = () => {
         if(playerIcon.alive === true) {
         enemyText.innerText = 'Hmm...Maybe you do have a point about her'
+        round ++
      }
     }
     setTimeout(enemyFinal, 8000)
@@ -322,9 +331,11 @@ const fightSequence = () => {
     const enemyFinal = () => {
         if(playerIcon.alive === true) {
         enemyText.innerText = 'Eh, youre alright.'
+        round ++
      }
     }
     setTimeout(enemyFinal, 8000)
+    
 }
 
 
@@ -337,6 +348,29 @@ const fightSequence = () => {
 //          RESET BUTTON ////
 
 const reset = () => {
+    console.log(`reset button hit`)
+    //stop game loop 
+    stopGameLoop()
+    //reset round to round 1
+    round = 1
+    //refill health attributes
+    let beginningHealth = 20
+    let currentHealth = beginningHealth
+    
+    let beginningHealthBarLength = 60
+    let currentPlayerHealthBarLength = beginningHealthBarLength
+    playerHealth.style.width = `${currentPlayerHealthBarLength}px`
+    let hit = playerIcon.hit
+    // clear all text messages 
+    enemyText.innerText = 'I am your worst nightmare'
+    gameMessage.innerText = ''
+    // player is alive again
+    playerIcon.alive = true 
+    //begin game loop again 
+    
+    gameLoop()
+    const gameInterval = setInterval(gameLoop, 60)
+    
 
 }
 
@@ -350,9 +384,21 @@ const reset = () => {
 // inside game loop, loop over projectile array, call the move/update function on each
 // when proj hits bottom, splice out of array
 
-//Game Loop
+//Game Loop (Handles animation, game status, player status, projectile behavior)
 
 const gameLoop = () => {
+    //checks the round
+    roundCounter()
+
+    //run through the loop normally unless we hit round 4
+    //if we get to round 4, display winning message, enemy message and stop the loop
+    if (round === 5 && playerIcon.alive === true) {
+        gameMessage.innerText = 'You won!'
+        enemyText.innerText = 'You are stronger than I thought...I WILL be back!'
+        stopGameLoop()
+        setTimeout(stopGameLoop, 4000)
+        //maybe add automatic reset thorough reset function??
+    }
     
     // check if player is alive
     // if alive make sure they arent getting hit
@@ -361,22 +407,26 @@ const gameLoop = () => {
             hitDetector(Projectile)
 
     } else {
-        gameMessage.textContent = "You Lose"
+        gameMessage.textContent = 'You Lose'
+        enemyText.innerText = 'Wow you really suck at this!'
         stopGameLoop()
     }
     // clear the canvas for better animation
     ctx.clearRect(0,0, gameplayArea.width, gameplayArea.height)
      // redisplay player
-     console.log('rendering player')
-     playerIcon.render()
-     playerIcon.playerMovement() 
+    console.log('rendering player') //take out later
+    playerIcon.render()
+    playerIcon.playerMovement() 
     //  healthTracker(playerIcon)
-     //loop over projectile array and call the update/move function 
+
+    //loop over projectile array and call the update/move function 
     projArray.forEach((proj) => {
         proj.update()
         hitDetector(proj)
         
-        // console.log(projArray)
+        //delete all projs if they hit bottom of screen
+        // or they hit the playerIcon
+        
         if (proj.y > 280) {
             projArray.splice(0, Infinity)
             console.log(projArray)
@@ -398,6 +448,8 @@ const gameLoop = () => {
 
 // Event Listeners
 
+
+//Movement Event Listeners
 document.addEventListener('keydown', (e) => {
     playerIcon.setDirection(e.key)
 })
@@ -409,13 +461,16 @@ document.addEventListener('keyup', (e) => {
     
 })
 
-
+// Button Event Listeners 
 fightBtn.addEventListener('click', fightSequence)
-//resetBtn.addEventListener('click', reset) still need to write out reset function
+
 actBtn.addEventListener('click', actSequence)
 
 mercyBtn.addEventListener('click', mercySequence)
-//need act function written
+//reset button here
+resetBtn.addEventListener('click', reset)
+
+//Game Loop Stop and Interval 
 const gameInterval = setInterval(gameLoop, 60)
 const stopGameLoop = () => {clearInterval(gameInterval)}
 
@@ -435,3 +490,8 @@ document.addEventListener('DOMContentLoaded', function () {
 // To do list 
 
 // add rounds to the game 
+// define rounds in a variable (how do we do that)
+// make a round counter function 
+// add it to game loop 
+//keeps track of rounds
+
