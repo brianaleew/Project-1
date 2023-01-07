@@ -5,7 +5,7 @@
 // player should be able to click the fight button to begin the game (more button options later)
 // player should be able to move their heart icon with W,A,S,D
 // Lose health when contact is made by the heart icon and a projectile
-//Display a Winner message after 20 projectiles have been dodged successfully
+//Display a Winner message after 3 rounds of projectiles have been dodged successfully
 
 
 
@@ -33,7 +33,7 @@ gameplayArea.setAttribute('height', getComputedStyle(gameplayArea)['height'])
    
    
 // gameMessage.innerText = "click fight to begin"
-gameMessage.style.color = 'pink'
+gameMessage.style.color = 'white'
 gameMessage.style.fontSize = '30px'
 
 const playerStatus = () => {
@@ -130,13 +130,6 @@ playerIcon.src = 'Images/8bit heart (project 1).png'
     }
 }
 
-// function fill_canvas(img) {
-        
-//     ctx.drawImage(img, playerIcon.x, playerIcon.y, 50, 50); 
-//     // syntax (img, x, y, width, height)
-//     //check canvas crawler. need to define x and y!
-
-// }
 const playerIcon = new PlayerIcon()
 playerIcon.render()
 
@@ -148,7 +141,7 @@ playerIcon.render()
     let beginningHealth = 20
     let currentHealth = beginningHealth
     
-    let beginningHealthBarLength = 50
+    let beginningHealthBarLength = 60
     let currentPlayerHealthBarLength = beginningHealthBarLength
     playerHealth.style.width = `${currentPlayerHealthBarLength}px`
     let hit = playerIcon.hit
@@ -158,6 +151,7 @@ playerIcon.render()
 
 const healthTracker = () => {
     //start with 20 health and 50px long health bar 
+    currentHealth = currentHealth - 4
     totalHealth.textContent = `${currentHealth}`
      console.log('health tracker runs')
     // if player collides with projectile then
@@ -166,7 +160,7 @@ const healthTracker = () => {
             //take damage
             // display a difference in hp in two ways
             // 1. health counter goes down by two
-            currentHealth = currentHealth - 2
+            
             //2.hp bar gets smaller by 10px
             currentPlayerHealthBarLength = currentPlayerHealthBarLength - 10
             playerHealth.style.width = `${currentPlayerHealthBarLength}px`
@@ -176,6 +170,8 @@ const healthTracker = () => {
 
             if(currentHealth <= 0) {
                 playerIcon.alive = false
+                playerHealth.style.width = '1px'
+                
             }
     
        
@@ -308,6 +304,29 @@ const actSequence = () => {
     setTimeout(enemyFinal, 8000)
 }
 
+const fightSequence = () => {
+    // once the act button is hit 
+
+    // increase round counter by one
+
+
+    // a message saying what you did appears
+   const playerAction = () => {gameMessage.innerText = 'You showed him your muscles...'}
+   setTimeout(playerAction, 1000)
+    // that message clears after _____ (a click maybe or a timer)
+    // a new message with the bosses response 
+    const enemyAction = () => {enemyText.innerText = 'HAHAHA you think you can beat me?!'}
+    setTimeout(enemyAction, 3000)
+    // after a click or timer the fight begins!
+    setTimeout(projectileMaker, 4000)
+    const enemyFinal = () => {
+        if(playerIcon.alive === true) {
+        enemyText.innerText = 'Eh, youre alright.'
+     }
+    }
+    setTimeout(enemyFinal, 8000)
+}
+
 
 // window.addEventListener('click', () => {
 //     console.log('checking event listener') 
@@ -343,6 +362,7 @@ const gameLoop = () => {
 
     } else {
         gameMessage.textContent = "You Lose"
+        stopGameLoop()
     }
     // clear the canvas for better animation
     ctx.clearRect(0,0, gameplayArea.width, gameplayArea.height)
@@ -390,7 +410,7 @@ document.addEventListener('keyup', (e) => {
 })
 
 
-fightBtn.addEventListener('click', projectileMaker)
+fightBtn.addEventListener('click', fightSequence)
 //resetBtn.addEventListener('click', reset) still need to write out reset function
 actBtn.addEventListener('click', actSequence)
 
@@ -413,5 +433,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 // To do list 
-// add timers/intervals to the mercy and act functions
+
 // add rounds to the game 
