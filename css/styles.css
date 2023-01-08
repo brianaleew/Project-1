@@ -100,3 +100,34 @@ button {
     left: 22px;
     bottom: -24px;
   }
+
+  #game-page {
+    display: none;
+  }
+
+  #welcome-screen {
+    background-image: url(https://images.unsplash.com/photo-1489101960932-eb71762e6bc8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FuZGxlJTIwd2l0aCUyMGJsYWNrJTIwYmFja2dyb3VuZHxlbnwwfHwwfHw%3D&w=1000&q=80);
+    background-repeat: no-repeat ;
+    height: 700px;
+    color: red;
+    
+    display: flex;
+    flex-direction: column;
+  }
+
+  #welcome-screen, p, li {
+    font-size: 20px;
+  }
+  .white-text {
+    color: white;
+  }
+
+  .instruction-list, li {
+    list-style: none;
+    margin: 10px;
+    
+  }
+  .how-to-win {
+    margin: 25px;
+  }
+  

@@ -10,7 +10,7 @@
 
 
 //step one: grab all elements we need 
-
+const gamePage = document.getElementsById('game-page')
 const gameplayArea = document.getElementById('canvas')
 const fightBtn = document.getElementById('fight-button')
 const mercyBtn = document.getElementById('mercy-button')
@@ -436,6 +436,7 @@ document.addEventListener('DOMContentLoaded', function () {
     gameInterval
 })
 
+// startBtn.addEventListener('click', loadGamePage)
 
 
 
@@ -443,6 +444,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // To do list 
 //either add start screen or add instructions to the game message area
-
+//possible plan set game page div to display hidden
 
 

@@ -21,37 +21,57 @@
       <!-- this should change from different commands and display winning message  -->
       <!-- <button id="start-button"></button> -->
     </header>
+    <div id="welcome-screen">
+      <h3 class="white-text"> This game is played against the computer. No friends needed. Perfect for somoene like you</h3>
+      <div class="instructions">
+        <h1>Instructions:</h1>
+        <ul class="instruction-list">
+          <li>Click on a button to choose your action </li>
+          <li>Wait for the enemy to respond and launch attacks at your soul (heart icon)</li>
+          <li>Move your soul (heart icon) with the W,A,S,D keys to dodge incoming projectiles</li>
+        </ul>
+      </div>
+      <div class="how-to-win">
+        <h1>How to Win: </h1>
+        <h2 class="white-text">Don't Die...Duh</h2>
+        <p>Click start to begin the game</p>
+      </div>
+      <div><button id="start-button">Start</button></div>
+    </div>
+    
 
-    <main>
-      <div>
-        <img
-          id="boss-image"
-          src="Images/project-1-boss.png"
-          alt="A picture of Bill Cypher"
-        />
-        <div id="bubble-text" class="bubble bubble-bottom-left" contenteditable>
-          
+    <div id="game-page">
+      <main>
+        <div>
+          <img
+            id="boss-image"
+            src="Images/project-1-boss.png"
+            alt="A picture of Bill Cypher"
+          />
+          <div id="bubble-text" class="bubble bubble-bottom-left" contenteditable>
+      
+          </div>
         </div>
-      </div>
-      <canvas id="canvas"></canvas>
-    </main>
-    <section>
-      <div class="play-area"></div>
-      <div class="menu-p">
-        <p>Player: You</p>
-        <p>Enemy: Bill Cypher</p>
-        <p>
-          HP <span id="health-bar"></span> <id id="health-counter">20</id>/20
-        </p>
-        <!--we need to get a yellow health bar to appear and blink red and appear 25% smaller after each hit-->
-      </div>
-      <div class="play-buttons">
-        <button id="mercy-button">MERCY</button>
-        <button id="act-button">ACT</button>
-        <button id="fight-button">FIGHT</button>
-        <button id="reset-button">Reset</button>
-      </div>
-    </section>
+        <canvas id="canvas"></canvas>
+      </main>
+      <section>
+        <div class="play-area"></div>
+        <div class="menu-p">
+          <p>Player: You</p>
+          <p>Enemy: Bill Cypher</p>
+          <p>
+            HP <span id="health-bar"></span> <id id="health-counter">20</id>/20
+          </p>
+          <!--we need to get a yellow health bar to appear and blink red and appear 25% smaller after each hit-->
+        </div>
+        <div class="play-buttons">
+          <button id="mercy-button">MERCY</button>
+          <button id="act-button">ACT</button>
+          <button id="fight-button">FIGHT</button>
+          <button id="reset-button">Reset</button>
+        </div>
+      </section>
+    </div>
 
     <script src="/js/app.js"></script>
   </body>
