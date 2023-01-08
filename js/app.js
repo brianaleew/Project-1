@@ -29,26 +29,23 @@ const ctx = gameplayArea.getContext('2d')
 gameplayArea.setAttribute('width', getComputedStyle(gameplayArea)['width'])
 gameplayArea.setAttribute('height', getComputedStyle(gameplayArea)['height'])
 
-  
-   
-   
 // gameMessage.innerText = "click fight to begin"
 gameMessage.style.color = 'white'
 gameMessage.style.fontSize = '30px'
+enemyText.innerText = `I'm Bill Cypher, your worst nightmare!!`
 
-const playerStatus = () => {
-    if(playerHealth > 0) {
-        playerIcon.alive = true 
-    } else {
-        playerIcon.alive = false 
-    }
-} 
+//Round Tracker Function (keeps track of the current round)
+const roundCounter = () => {
+
+    let currentRound = round
+    console.log('the current round is', currentRound)
+    
+}
 
 
 ////////// Player Icon/ Image /////////////
-// let img = new Image();
 
-//  Player Object and Player Movement
+//  Player Class and Player Movement
 
 class PlayerIcon {
     constructor(x, y, width, height, direction)
@@ -148,15 +145,6 @@ playerIcon.render()
  //   gameLoop()
 //}
 
-//Round Tracker Function (keeps track of the current round)
-const roundCounter = () => {
-
-    let currentRound = round
-    console.log('the current round is', currentRound)
-    
-}
-
-
 // Player Health
 
 const healthTracker = () => {
@@ -164,31 +152,29 @@ const healthTracker = () => {
     
     // if player collides with projectile then
     // const playerHit = () => {
-       
-            //take damage
-            // display a difference in hp in two ways
-            // 1. health counter goes down by two
-            currentHealth = currentHealth - 4
+    //take damage
+    // display a difference in hp in two ways
+    // 1. health counter goes down by two
+     //2.hp bar gets smaller by 10px
+    currentHealth = currentHealth - 4
     totalHealth.textContent = `${currentHealth}`
-     console.log('health tracker runs')
-            //2.hp bar gets smaller by 10px
-            currentPlayerHealthBarLength = currentPlayerHealthBarLength - 10
-            playerHealth.style.width = `${currentPlayerHealthBarLength}px`
-            console.log(`got hit`)
-            console.log('this is currentHealth',currentHealth)
-            console.log('this is player width',playerHealth.style.width)
+    console.log('health tracker runs')
+           
+    currentPlayerHealthBarLength = currentPlayerHealthBarLength - 10
+    playerHealth.style.width = `${currentPlayerHealthBarLength}px`
+    console.log(`got hit`)
+    console.log('this is currentHealth',currentHealth)
+    console.log('this is player width',playerHealth.style.width)
 
-            if(currentHealth <= 0) {
-                playerIcon.alive = false
-                playerHealth.style.width = '10px'
+    if(currentHealth <= 0) {
+        playerIcon.alive = false
+        playerHealth.style.width = '10px'
                 
-            }
+    }
     
        
 
 }
-
-
 
  // projectile storage (array)
  const projArray = []
@@ -226,7 +212,7 @@ const healthTracker = () => {
     
 }  
 
-// Trying  to create 8 random projectiles
+// Trying  to create 6 random projectiles
 const projectileMaker = () => {
 
     for (let i = 0; i < 6; i++) {
@@ -245,7 +231,7 @@ const projectileMaker = () => {
 
 ////// Hit Detector //////
 
-  function hitDetector (thing) {
+function hitDetector (thing) {
 //the big if statement
 
  if (playerIcon.x < thing.x + thing.width
@@ -255,16 +241,12 @@ const projectileMaker = () => {
         healthTracker()
         console.log('HIT!')
         thing.alive = false
-        //  thing.hit = true 
-        if(thing.alive == false) {
 
-        }
-        
     }
 
 }
 
-
+//Button Sequences
 
 const mercySequence = () => {
      //once the mercy button is hit
@@ -339,25 +321,13 @@ const fightSequence = () => {
 }
 
 
-// window.addEventListener('click', () => {
-//     console.log('checking event listener') 
-// })
 
 
-
-
-
-
-
-
-
+//Game Loop (Handles animation, game status, player status, projectile behavior)
 // start game loop that runs animation like cc
 //projectile maker function stores projectile in array
 // inside game loop, loop over projectile array, call the move/update function on each
 // when proj hits bottom, splice out of array
-
-//Game Loop (Handles animation, game status, player status, projectile behavior)
-
 const gameLoop = () => {
     //checks the round
     roundCounter()
@@ -422,46 +392,6 @@ const gameLoop = () => {
 const gameInterval = setInterval(gameLoop, 60)
 const stopGameLoop = () => {clearInterval(gameInterval)}
 
-////RESET BUTTON ////
-
-const reset = () => {
-    console.log(`reset button hit`)
-    //stop game loop 
-    stopGameLoop()
-    //reset round to round 1
-    round = 1
-    //refill health attributes
-    let beginningHealth = 20
-    let currentHealth = beginningHealth
-    // let currentHealth = 20
-    
-    
-    let beginningHealthBarLength = 60
-    let currentPlayerHealthBarLength = beginningHealthBarLength
-    playerHealth.style.width = `${currentPlayerHealthBarLength}px`
-   
-    // clear all text messages 
-    // (taunt player then put beginning enemy text)
-    enemyText.innerText = `Can't handle the heat?`
-    const enemyAction = () => {enemyText.innerText = `I'm Bill Cypher...your worst nightmare`}
-    setTimeout(enemyAction, 2000)
-    // Tell player they restarted the game then erase
-    gameMessage.innerText = 'You restarted the game'
-    const playerAction = () => {
-        gameMessage.innerText = ''
-    }
-    setTimeout(playerAction, 2000)
-    // player is alive again
-    playerIcon.alive = true 
-    //begin game loop again 
-    
-    gameLoop()
-    const gameInterval = setInterval(gameLoop, 60)
-    
-
-}
-reset()
-
 
 // Event Listeners
 
@@ -485,7 +415,20 @@ actBtn.addEventListener('click', actSequence)
 
 mercyBtn.addEventListener('click', mercySequence)
 //reset button here
-resetBtn.addEventListener('click', reset)
+resetBtn.addEventListener('click', function () { 
+ // (taunt player then put beginning enemy text)
+    enemyText.innerText = `Can't handle the heat?`
+    // Tell player they restarted the game then erase
+    gameMessage.innerText = 'You restarted the game'
+    const reload = () => {
+         window.location.reload();
+    return false 
+
+    }
+    setTimeout(reload, 2000)
+   
+    
+}) 
 
 
 
@@ -499,9 +442,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 // To do list 
-
-//get reset button to reset health
-//why is game getting faster when reset is hit more than once?
 //either add start screen or add instructions to the game message area
 
 
