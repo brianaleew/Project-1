@@ -10,7 +10,9 @@
 
 
 //step one: grab all elements we need 
-const gamePage = document.getElementsById('game-page')
+const gamePage = document.getElementById('game-page')
+const startBtn = document.getElementById('start-button')
+const welcomePage = document.getElementById('welcome-page')
 const gameplayArea = document.getElementById('canvas')
 const fightBtn = document.getElementById('fight-button')
 const mercyBtn = document.getElementById('mercy-button')
@@ -21,8 +23,8 @@ const totalHealth = document.getElementById('health-counter')
 const gameMessage = document.getElementById('game-message')
 const enemyText = document.getElementById('bubble-text')
 
+// console.log(gameplayArea)
 
-console.log(gameplayArea)
 // CANVAS SETUP
 const ctx = gameplayArea.getContext('2d')
 
@@ -33,6 +35,16 @@ gameplayArea.setAttribute('height', getComputedStyle(gameplayArea)['height'])
 gameMessage.style.color = 'white'
 gameMessage.style.fontSize = '30px'
 enemyText.innerText = `I'm Bill Cypher, your worst nightmare!!`
+
+
+
+//Loading Page Function (transit user from start page to game page)
+const loadGamePage = () => {
+    //remove the welcome page
+    welcomePage.remove();
+    //remove the display none property on the game page 
+    gamePage.style.visibility = 'visible'
+}
 
 //Round Tracker Function (keeps track of the current round)
 const roundCounter = () => {
@@ -45,7 +57,7 @@ const roundCounter = () => {
 
 ////////// Player Icon/ Image /////////////
 
-//  Player Class and Player Movement
+//Player Class and Player Movement
 
 class PlayerIcon {
     constructor(x, y, width, height, direction)
@@ -436,7 +448,7 @@ document.addEventListener('DOMContentLoaded', function () {
     gameInterval
 })
 
-// startBtn.addEventListener('click', loadGamePage)
+startBtn.addEventListener('click', loadGamePage)
 
 
 

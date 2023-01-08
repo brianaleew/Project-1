@@ -47,7 +47,6 @@ button {
 .menu-p {
     color: red;
     display: flex;
-    
     justify-content: space-around;
     font-size: 20px;
     padding: 20px;
@@ -102,20 +101,20 @@ button {
   }
 
   #game-page {
-    display: none;
+    /* display: none; */
+    visibility: hidden;
   }
 
-  #welcome-screen {
+  #welcome-page {
     background-image: url(https://images.unsplash.com/photo-1489101960932-eb71762e6bc8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FuZGxlJTIwd2l0aCUyMGJsYWNrJTIwYmFja2dyb3VuZHxlbnwwfHwwfHw%3D&w=1000&q=80);
     background-repeat: no-repeat ;
     height: 700px;
     color: red;
-    
     display: flex;
     flex-direction: column;
   }
 
-  #welcome-screen, p, li {
+  #welcome-page, p, li {
     font-size: 20px;
   }
   .white-text {
