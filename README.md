@@ -2,7 +2,7 @@
 
 # H2 Game Title : Another Tale
 
-![An image of the Undertale Enemy Fight Screen](https://64.media.tumblr.com/0cf3211377959d9e14baa20933917a22/tumblr_ofoj4lOWZ51ueyr6yo3_1280.jpg)
+![Game Start Screen](Images/Project-1-game-start-screen.png)
 
 # H2 Overview:
 
@@ -11,27 +11,47 @@ Every fight is filled with humor and unexpected options as the character attempt
 
 # H2 User should be able to:
 
-1.  Be greeted by a start screen featuring three buttons (choose difficulty: Easy, Normal, and Start Game)
+1.  Be greeted by a welcome screen that features instructions and a start button
 
-2.  Choose a difficulty by clicking Easy or Normal
+2.  Begin the game by clicking "Start Game"
 
-3.  Begin the game by clicking "Start Game"
+3.  Be brought to Game Page where the user plays
 
-4.  Encounter an enemy and choose between "Fight", "Act" and "Mercy"
+4.  Encounter the enemy and choose between "Fight", "Act" and "Mercy"
 
 5.  Receive a text box displaying the corresponding action followed by the enemy's reponse (another text box)
 
 6.  Control their soul (a small heart icon) to dodge incoming projectiles using W, A, S, D when the enemy attacks
 
-7.  Be able to see their health through an HP bar
+7.  Be able to see their health through an HP bar and numeric counter
 
-8.  Receive a "You Win" prompt after "x" amount of rounds of projectiles (or maybe none at all)
+8.  Repeat sequence until the user receives a "You Win" prompt after surviving "x" amount of rounds of projectiles or lose when their HP hits 0.
 
 9.  Be able to restart the game at any moment using a reset button.
 
-10. Maybe have a laugh?
+# Version 1 Screens:
 
-# H2 Mockup Pictures (not final):
+- Welcome Screen
+  ![welcome screen](Images/Project-1-welcome-screen.png)
+
+- Game Start Screen
+  ![game start screen](Images/Project-1-game-start-screen.png)
+
+- Action Screen
+
+![action screen](Images/Project-1-action-screen.png)
+
+- Loser Screen
+
+![action screen](Images/Project-1-lose-screen.png)
+
+# Technology Used :
+
+- HTML
+- CSS
+- JavaScript
+
+# Initial Mockup Pictures:
 
 - Title Screen
   ![title screen](/Images/Game-Project%20title%20screen.jpeg)
@@ -42,10 +62,3 @@ Every fight is filled with humor and unexpected options as the character attempt
 - Action Screen
 
 ![action screen](/Images/Game%20Project%20Action%20Screen.jpeg)
-
-# H2 Technology Used :
-
-- HTML
-- CSS
-- JavaScript
-- Canvas
