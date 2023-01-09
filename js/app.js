@@ -34,7 +34,7 @@ gameplayArea.setAttribute('height', getComputedStyle(gameplayArea)['height'])
 // gameMessage.innerText = "click fight to begin"
 gameMessage.style.color = 'white'
 gameMessage.style.fontSize = '30px'
-enemyText.innerText = `I'm Bill Cypher, your worst nightmare!!`
+enemyText.innerText = `Human souls are super rare on the black market. Gimmie!`
 
 
 
@@ -348,8 +348,8 @@ const gameLoop = () => {
     //run through the loop normally unless we hit round 4
     //if we get to round 4, display winning message, enemy message and stop the loop
     if (round === 5 && playerIcon.alive === true) {
-        gameMessage.innerText = 'You won!'
-        enemyText.innerText = 'You are stronger than I thought...I WILL be back!'
+        gameMessage.innerText = 'You won'
+        enemyText.innerText = `Pft! Your soul isn't that pure anyway. I've seen your browser history!`
         stopGameLoop()
         setTimeout(stopGameLoop, 4000)
         //maybe add automatic reset thorough reset function??
